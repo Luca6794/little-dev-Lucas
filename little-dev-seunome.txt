@@ -1,0 +1,8 @@
+Trabalho:
+3) Sistema de Gestão de Empréstimo de Equipamentos
+
+1- O que seria interessante registrar no site:
+-Tipo, marca, condições ( estado em que o produto foi entregue, se estava danificado ou em perfeita condição) quem pegou emprestado o item, em qual horario foi pego e delvovido, onde é armagenado, se ter algum item a mais como controle, o codigo do item (todo item do colegio tem um codigo proprio).
+2- Obcervação: quando o objeto for entregue, se ele esta nas mesmas condições antes da entrega, tambem um relatorio do item para saber com quem esta e com quem ele ja passou.
+
+3- Desine: letras grandes, opção de mudar o idioma, mudar a cor para modod escuro, colocar icones, opção de divisão dos itens, filtro, se é um item fixo ou não 
