@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmpréstSENAI - Sistema de Gerenciamento de Equipamentos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header / Navigation -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="logo-senai.png" alt="SENAI" class="logo">
+            </div>
+            <nav class="nav">
+                <button class="nav-btn active" data-section="dashboard" data-translate="nav-dashboard">Dashboard</button>
+                <button class="nav-btn" data-section="cadastro" data-translate="nav-cadastro">Cadastro</button>
+                <button class="nav-btn" data-section="emprestimos" data-translate="nav-emprestimos">Empréstimos</button>
+                <button class="nav-btn" data-section="equipamentos" data-translate="nav-equipamentos">Equipamentos</button>
+                <button class="nav-btn" data-section="configuracoes">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M12 1v6m0 6v6m8.66-15.66l-4.24 4.24m-4.84 4.84l-4.24 4.24M23 12h-6m-6 0H1m15.66 8.66l-4.24-4.24m-4.84-4.84l-4.24-4.24"></path>
+                    </svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <div class="welcome-banner">
+                <h1 class="welcome-title" data-translate="welcomeTitle">Bem-vindo ao EmpréstSENAI</h1>
+            </div>
+
+            <div class="stats-section">
+                <h2 class="section-title">
+                    <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3v18h18"></path>
+                        <path d="M18 17V9m-5 8V5m-5 12v-4"></path>
+                    </svg>
+                    <span data-translate="visaoGeral">Visão Geral:</span>
+                </h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="stat-total-equipamentos">0</div>
+                        <div class="stat-label" data-translate="totalEquipamentos">Total de Equipamentos</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-number" id="stat-emprestimos-ativos">0</div>
+                        <div class="stat-label" data-translate="emprestimosAtivos">Empréstimos Ativos</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-number" id="stat-equipamentos-disponiveis">0</div>
+                        <div class="stat-label" data-translate="equipamentosDisponiveis">Equipamentos Disponíveis</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-number" id="stat-equipamentos-manutencao">0</div>
+                        <div class="stat-label" data-translate="equipamentosManutencao">Em Manutenção</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recent-section">
+                <div class="section-header">
+                    <h2 class="section-title" data-translate="ultimosEmprestimos">Últimos Empréstimos (3)</h2>
+                </div>
+                <div class="recent-loans" id="recent-loans-container">
+                    <p class="empty-state" data-translate="nenhumEmprestimoRegistrado">Nenhum empréstimo registrado ainda.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cadastro Section -->
+        <section id="cadastro" class="section">
+            <h2 class="page-title" data-translate="cadastroEquipamentos">Cadastro de Equipamentos</h2>
+            
+            <form id="form-cadastro" class="form-container">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="codigo" class="form-label"><span data-translate="codigo">Código</span>: <span class="required">*</span></label>
+                        <input type="text" id="codigo" name="codigo" class="form-input" required data-translate-placeholder="placeholderCodigo">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tipo" class="form-label"><span data-translate="tipo">Tipo</span>: <span class="required">*</span></label>
+                        <input type="text" id="tipo" name="tipo" class="form-input" required data-translate-placeholder="placeholderTipo">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="marca" class="form-label"><span data-translate="marca">Marca</span>: <span class="required">*</span></label>
+                        <input type="text" id="marca" name="marca" class="form-input" required data-translate-placeholder="placeholderMarca">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="categoria" class="form-label"><span data-translate="categoria">Categoria</span>: <span class="required">*</span></label>
+                        <input type="text" id="categoria" name="categoria" class="form-input" required data-translate-placeholder="placeholderCategoria">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status" class="form-label"><span data-translate="statusInicial">Status Inicial</span>: <span class="required">*</span></label>
+                        <select id="status" name="status" class="form-input" required>
+                            <option value="Disponível" data-translate-option="disponivel">Disponível</option>
+                            <option value="Em manutenção" data-translate-option="manutencao">Em manutenção</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="local" class="form-label"><span data-translate="local">Local</span>: <span class="required">*</span></label>
+                        <input type="text" id="local" name="local" class="form-input" required data-translate-placeholder="placeholderLocal">
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="fixo" name="fixo">
+                            <span data-translate="itemFixo">Item Fixo</span>
+                        </label>
+                        <small class="form-hint" data-translate="itemFixoHint">Marcar se o item pertence fixamente ao local</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="condicoes" class="form-label" data-translate="condicoes">Condições</label>
+                        <input type="text" id="condicoes" name="condicoes" class="form-input" data-translate-placeholder="placeholderCondicoes">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="observacoes" class="form-label" data-translate="observacoes">Observações</label>
+                        <textarea id="observacoes" name="observacoes" class="form-textarea" rows="3" data-translate-placeholder="placeholderObservacoes"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" data-translate="salvar">Salvar</button>
+                    <button type="button" class="btn btn-secondary" id="btn-limpar" data-translate="limpar">Limpar</button>
+                    <button type="button" class="btn btn-tertiary" id="btn-voltar-cadastro" data-translate="voltar">Voltar</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Empréstimos Section -->
+        <section id="emprestimos" class="section">
+            <h2 class="page-title" data-translate="gestaoEmprestimos">Gestão de Empréstimos</h2>
+
+            <!-- Criar Empréstimo -->
+            <div class="subsection">
+                <h3 class="subsection-title" data-translate="criarEmprestimo">Criar Empréstimo</h3>
+                <form id="form-emprestimo" class="form-container">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="emp-codigo" class="form-label"><span data-translate="codigo">Código</span>: <span class="required">*</span></label>
+                            <input type="text" id="emp-codigo" name="codigo" class="form-input" required data-translate-placeholder="placeholderEmpCodigo">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="emp-item" class="form-label"><span data-translate="item">Item</span>:</label>
+                            <input type="text" id="emp-item" name="item" class="form-input" readonly data-translate-placeholder="placeholderEmpItem">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="emp-solicitante" class="form-label"><span data-translate="solicitante">Solicitante</span>: <span class="required">*</span></label>
+                            <input type="text" id="emp-solicitante" name="solicitante" class="form-input" required data-translate-placeholder="placeholderSolicitante">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="emp-data-emprestimo" class="form-label"><span data-translate="dataEmprestimo">Data Empréstimo</span>: <span class="required">*</span></label>
+                            <input type="datetime-local" id="emp-data-emprestimo" name="dataEmprestimo" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="emp-prazo-devolucao" class="form-label"><span data-translate="prazoDevolucao">Prazo Devolução</span>: <span class="required">*</span></label>
+                            <input type="datetime-local" id="emp-prazo-devolucao" name="prazoDevolucao" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="emp-danos" class="form-label" data-translate="danos">Danos</label>
+                            <input type="text" id="emp-danos" name="danos" class="form-input" data-translate-placeholder="placeholderDanos">
+                        </div>
+                    </div>
+
+                    <div id="validation-message" class="validation-message hidden"></div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" data-translate="criar">Criar</button>
+                        <button type="button" class="btn btn-secondary" id="btn-limpar-emprestimo" data-translate="limpar">Limpar</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Empréstimos Ativos -->
+            <div class="subsection">
+                <div class="subsection-header">
+                    <h3 class="subsection-title" data-translate="emprestimosAtivosTitle">Empréstimos Ativos (3)</h3>
+                    <button class="btn btn-link" id="btn-ver-todos-ativos" data-translate="verTodos">Ver Todos</button>
+                </div>
+                <div id="emprestimos-ativos-preview"></div>
+            </div>
+
+            <!-- Devoluções Finalizadas -->
+            <div class="subsection">
+                <div class="subsection-header">
+                    <h3 class="subsection-title" data-translate="devolucoesFinalizadasTitle">Devoluções Finalizadas (3)</h3>
+                    <button class="btn btn-link" id="btn-ver-todos-finalizados" data-translate="verTodos">Ver Todos</button>
+                </div>
+                <div id="devolucoes-finalizadas-preview"></div>
+            </div>
+        </section>
+
+        <!-- Empréstimos Ativos Expandidos -->
+        <section id="emprestimos-ativos-expandido" class="section">
+            <h2 class="page-title" data-translate="todosEmprestimosAtivos">Todos os Empréstimos Ativos</h2>
+            
+            <div class="search-container-full">
+                <input type="text" id="filtro-ativos-expandido" class="search-input" data-translate-placeholder="placeholderFiltro">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table" id="tabela-ativos-expandido">
+                    <thead>
+                        <tr>
+                            <th data-translate="codigo">Código</th>
+                            <th data-translate="item">Item</th>
+                            <th data-translate="solicitante">Solicitante</th>
+                            <th data-translate="dataEmprestimo">Data Empréstimo</th>
+                            <th data-translate="prazoDevolucao">Prazo Devolução</th>
+                            <th data-translate="danos">Danos</th>
+                            <th data-translate="acoes">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <button class="btn btn-tertiary mt-3" id="btn-voltar-ativos" data-translate="voltar">Voltar</button>
+        </section>
+
+        <!-- Devoluções Finalizadas Expandidas -->
+        <section id="devolucoes-finalizadas-expandido" class="section">
+            <h2 class="page-title" data-translate="todasDevolucoes">Todas as Devoluções Finalizadas</h2>
+            
+            <div class="search-container-full">
+                <input type="text" id="filtro-finalizados-expandido" class="search-input" data-translate-placeholder="placeholderFiltro">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table" id="tabela-finalizados-expandido">
+                    <thead>
+                        <tr>
+                            <th data-translate="codigo">Código</th>
+                            <th data-translate="item">Item</th>
+                            <th data-translate="solicitante">Solicitante</th>
+                            <th data-translate="dataEmprestimo">Data Empréstimo</th>
+                            <th data-translate="prazoDevolucao">Prazo Devolução</th>
+                            <th data-translate="dataDevolucao">Data Devolução</th>
+                            <th data-translate="danos">Danos</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <button class="btn btn-tertiary mt-3" id="btn-voltar-finalizados" data-translate="voltar">Voltar</button>
+        </section>
+
+        <!-- Equipamentos Section -->
+        <section id="equipamentos" class="section">
+            <h2 class="page-title" data-translate="equipamentosCadastrados">Equipamentos Cadastrados</h2>
+            
+            <div class="search-container-full">
+                <input type="text" id="filtro-equipamentos" class="search-input" data-translate-placeholder="placeholderFiltro">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table" id="tabela-equipamentos">
+                    <thead>
+                        <tr>
+                            <th data-translate="codigo">Código</th>
+                            <th data-translate="tipo">Tipo</th>
+                            <th data-translate="marca">Marca</th>
+                            <th data-translate="categoria">Categoria</th>
+                            <th data-translate="status">Status</th>
+                            <th data-translate="local">Local</th>
+                            <th data-translate="fixo">Fixo</th>
+                            <th data-translate="condicoes">Condições</th>
+                            <th data-translate="observacoes">Observações</th>
+                            <th data-translate="acoes">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Configurações Section -->
+        <section id="configuracoes" class="section">
+            <h2 class="page-title" data-translate="configuracoes">Configurações</h2>
+
+            <div class="config-container">
+                <div class="config-group">
+                    <h3 class="config-title" data-translate="modoEscuro">Modo Escuro</h3>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="toggle-dark-mode">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="config-group">
+                    <h3 class="config-title" data-translate="lingua">Idioma</h3>
+                    <div class="language-options">
+                        <label class="language-option">
+                            <input type="radio" name="language" value="pt-BR" checked>
+                            <span>Português (Brasil)</span>
+                        </label>
+                        <label class="language-option">
+                            <input type="radio" name="language" value="es">
+                            <span>Español</span>
+                        </label>
+                        <label class="language-option">
+                            <input type="radio" name="language" value="en">
+                            <span>English</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal de Edição -->
+    <div id="modal-editar" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" data-translate="editarEquipamento">Editar Equipamento</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="form-editar" class="form-container">
+                <input type="hidden" id="edit-id">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="edit-codigo" class="form-label" data-translate="codigo">Código</label>
+                        <input type="text" id="edit-codigo" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-tipo" class="form-label" data-translate="tipo">Tipo</label>
+                        <input type="text" id="edit-tipo" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-marca" class="form-label" data-translate="marca">Marca</label>
+                        <input type="text" id="edit-marca" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-categoria" class="form-label" data-translate="categoria">Categoria</label>
+                        <input type="text" id="edit-categoria" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-status" class="form-label" data-translate="status">Status</label>
+                        <select id="edit-status" class="form-input" required>
+                            <option value="Disponível" data-translate-option="disponivel">Disponível</option>
+                            <option value="Emprestado" data-translate-option="emprestado">Emprestado</option>
+                            <option value="Em manutenção" data-translate-option="manutencao">Em manutenção</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-local" class="form-label" data-translate="local">Local</label>
+                        <input type="text" id="edit-local" class="form-input" required>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="edit-fixo">
+                            <span data-translate="itemFixo">Item Fixo</span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-condicoes" class="form-label" data-translate="condicoes">Condições</label>
+                        <input type="text" id="edit-condicoes" class="form-input">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="edit-observacoes" class="form-label" data-translate="observacoes">Observações</label>
+                        <textarea id="edit-observacoes" class="form-textarea" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" data-translate="salvar">Salvar</button>
+                    <button type="button" class="btn btn-tertiary modal-close" data-translate="fechar">Fechar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
